@@ -1,1 +1,1 @@
-# snowflake-arctic
+<img src="assets/Snowflake-Arctic-hero.png" width="600px">
