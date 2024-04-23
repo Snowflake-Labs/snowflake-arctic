@@ -1,1 +1,1 @@
-<img src="assets/Snowflake-Arctic-hero.png" width="600px">
+<img src="assets/Snowflake-Arctic-hero.png" width="800px">
