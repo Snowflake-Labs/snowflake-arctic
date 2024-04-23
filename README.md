@@ -16,13 +16,14 @@ The Snowflake AI Research Team is thrilled to introduce Snowflake Arctic, a top-
 
 ## Getting Started
 
-There are two ways you can get started using Arctic
-
 ### Inference API Providers 🚀
 You can access Arctic through your favorite API provider such as AWS, Microsoft Azure, NVIDIA Foundry, Lamini, Perplexity, Replicate and Together.
 
-### Hugging Face 🤗
+### Model Weights 🤗
 The best way to get yourself running with Arctic is through Hugging Face. We have uploaded both the Base and Instruct model variants to the Hugging Face hub:
 
 * [Snowflake/snowflake-arctic-base](https://huggingface.co/Snowflake/snowflake-arctic-base)
 * [Snowflake/snowflake-arctic-instruct](https://huggingface.co/Snowflake/snowflake-arctic-instruct)
+
+### Inference
+
