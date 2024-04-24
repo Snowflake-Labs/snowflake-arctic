@@ -2,6 +2,14 @@
 This tutorial covers how to use Arctic with vLLM and what performance you should expect when running it. We are actively 
 working with the vLLM community to upstream Arctic support, but until then please use the repos detailed below.
 
+## Dockerfile
+We strongly recommend building and using the following Dockerfile to stand up an environment for running vLLM with Arctic. 
+The system performance and memory utilization of Arctic on vLLM can be sensitive to the runtime environment. We provide a 
+short Dockerfile that closely aligns with Snowflake’s internal testing environment that is verified to obtain good 
+performance and stability.
+
+* [Dockerfile](Dockerfile)
+
 ## Step 1: Install Dependencies
 
 We recommend setting up a virtual environment to get all of your dependencies isolated to avoid potential conflicts.
@@ -65,11 +73,5 @@ python benchmark_online.py --prompt_length 2048 \
    --model [ARCTIC MODEL PATH]\
    --framework vllm
 ```
-
-## Dockerfile
-The system performance and memory utilization of Arctic on vLLM can be sensitive to the runtime environment. We provide a short Dockerfile 
-that closely aligns with Snowflake’s internal testing environment that is verified to obtain good performance and stability.
-
-* [Dockerfile](Dockerfile)
 
 ## Performance
