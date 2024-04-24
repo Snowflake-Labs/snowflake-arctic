@@ -53,7 +53,7 @@ USE_DUMMY=True python3 benchmark_batch.py \
     --max_new_tokens 256 \
     -tp 8 \
     --framework vllm \
-    --model [Model CKPT Path]
+    --model "snowflake/snowflake-arctic-instruct"
 ```
 
 ## Step 4: how to run online benchmarks
@@ -62,7 +62,7 @@ USE_DUMMY=True python3 benchmark_batch.py \
 cd vllm/benchmarks
 
 # Start an OpenAI-like server
-USE_DUMMY=True python -m vllm.entrypoints.api_server --model=[ARCTIC MODEL PATH] -tp=8 --quantization yq
+USE_DUMMY=True python -m vllm.entrypoints.api_server --model="snowflake/snowflake-arctic-instruct" -tp=8 --quantization yq
 
 # Run the benchmark
 python benchmark_online.py --prompt_length 2048 \
@@ -70,8 +70,11 @@ python benchmark_online.py --prompt_length 2048 \
    --max_new_tokens 256 \
    -c 1024 \
    -qps 1.0 \
-   --model [ARCTIC MODEL PATH]\
+   --model "snowflake/snowflake-arctic-instruct" \
    --framework vllm
 ```
 
 ## Performance
+
+Currently you should be seeing with `batch_size=1` a throughput of 70+ tokens/sec. We are actively 
+working on improving this performance so stay tuned!
