@@ -48,7 +48,7 @@ We provide two different tutorials on standing up Arctic for inference:
 
 ## Cookbooks/Tutorials
 
-TODO: add links here to cookbooks and a short description of what this effort is
+* [Arctic cookbooks](https://www.snowflake.com/en/data-cloud/arctic/cookbook/)
 
 ## Coming Soon
 
