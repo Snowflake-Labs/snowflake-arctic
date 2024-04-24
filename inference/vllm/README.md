@@ -38,7 +38,7 @@ git clone -b arctic https://github.com/Snowflake-Labs/vllm.git
 cd vllm
 pip install -e .
 
-# clone huggingface and checkout arctic branch
+# clone Hugging Face and checkout arctic branch
 git clone -b arctic https://github.com/Snowflake-Labs/transformers.git
 
 # install deepspeed
