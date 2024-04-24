@@ -4,7 +4,7 @@
 # ❄️ Snowflake Arctic ❄️
 
 ## Latest News
-* [04/24/2024] [Snowflake Arctic: The Best LLM for Enterprise AI — Efficiently Intelligent, Truly Open](https://www.snowflake.com/blog/arctic-open-and-efficient-foundation-language-models-snowflake)
+* [04/24/2024] [Snowflake Arctic: The Best LLM for Enterprise AI — Efficiently Intelligent, Truly Open](https://www.snowflake.com/blog/arctic-open-efficient-foundation-language-models-snowflake/)
     
 ## Overview
 
