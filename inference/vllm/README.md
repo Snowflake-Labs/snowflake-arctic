@@ -48,8 +48,6 @@ pip install deepspeed>=0.14.2
 ## Step 2: Run offline inference example
 
 ```bash
-cd vllm/examples
-
 # Make sure the arctic_model_path points to the folder path we provided.
 USE_DUMMY=True python offline_inference_arctic.py
 ```
@@ -57,7 +55,7 @@ USE_DUMMY=True python offline_inference_arctic.py
 ## Step 3: how to run offline benchmarks
 
 ```bash
-cd vllm/benchmarks
+cd benchmarks
 
 # Run the following
 USE_DUMMY=True python3 benchmark_batch.py \
@@ -73,7 +71,7 @@ USE_DUMMY=True python3 benchmark_batch.py \
 ## Step 4: how to run online benchmarks
 
 ```bash
-cd vllm/benchmarks
+cd benchmarks
 
 # Start an OpenAI-like server
 USE_DUMMY=True python -m vllm.entrypoints.api_server --model="snowflake/snowflake-arctic-instruct" -tp=8 --quantization deepspeedfp
