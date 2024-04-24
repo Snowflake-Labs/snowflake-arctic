@@ -76,7 +76,7 @@ USE_DUMMY=True python3 benchmark_batch.py \
 cd vllm/benchmarks
 
 # Start an OpenAI-like server
-USE_DUMMY=True python -m vllm.entrypoints.api_server --model="snowflake/snowflake-arctic-instruct" -tp=8 --quantization yq
+USE_DUMMY=True python -m vllm.entrypoints.api_server --model="snowflake/snowflake-arctic-instruct" -tp=8 --quantization deepspeedfp
 
 # Run the benchmark
 python benchmark_online.py --prompt_length 2048 \
