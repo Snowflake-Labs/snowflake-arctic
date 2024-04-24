@@ -3,8 +3,6 @@
 
 # ❄️ Snowflake Arctic ❄️
 
-<!--<img src="assets/Snowflake-Arctic-hero-slim.png" width="800px">-->
-
 ## Latest News
 * [04/24/2024] [Snowflake Arctic: The Best LLM for Enterprise AI — Efficiently Intelligent, Truly Open](https://www.snowflake.com/blog/arctic-open-and-efficient-foundation-language-models-snowflake)
     
@@ -33,7 +31,7 @@ The Snowflake AI Research Team is thrilled to introduce Snowflake Arctic, a top-
 ## Getting Started
 
 ### Inference API Providers 🚀
-You can access Arctic through your favorite API provider such as AWS, Microsoft Azure, NVIDIA Foundry, Lamini, Perplexity, Replicate and Together.
+Access Arctic via your model garden or catalog of choice including AWS, NVIDIA AI Catalog, Replicate, Lamini, Perplexity, and Together AI over the next coming days.
 
 ### Model Weights 🤗
 The best way to get yourself running with Arctic is through Hugging Face. We have uploaded both the Base and Instruct model variants to the Hugging Face hub:
@@ -47,3 +45,16 @@ We provide two different tutorials on standing up Arctic for inference:
 
 * [Basic Hugging Face setup](inference/)
 * [vLLM Deployment](inference/vllm/)
+
+## Cookbooks/Tutorials
+
+TODO: add links here to cookbooks and a short description of what this effort is
+
+## Coming Soon
+
+Continue to watch this space we plan to frequently add new things here including:
+
+* Fine-tuning tutorials
+* Further improvements to inference performance
+* HFQuantizer support for DeepSpeed's FP Quantization
+* Upstreaming Arctic support for both transformers and vLLM
