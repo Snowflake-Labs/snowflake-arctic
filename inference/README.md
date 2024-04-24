@@ -1,6 +1,10 @@
-# Getting Started with Arctic on Hugging Face
+# Getting Started with Arctic 
 
-## Dependencies
+If you want to run Arctic with pure-HF to explore the model see the instructions below. For a more performant deployment we have provided [instructions on using Arctic with vLLM](vllm).
+
+## Hugging Face
+
+### Dependencies
 
 Install the following packages, they can all be found under [requirements.txt](requirements.txt) as well. 
 We are actively working on upstreaming both the `transformers` and `vllm` changes required to run Arctic but for
@@ -16,7 +20,7 @@ huggingface_hub[hf_transfer]
 We highly recommend using `hf_transfer` to download the Arctic weights, this will greatly reduce the time you are 
 sitting waiting for the checkpoint shards to download.
 
-## Run Arctic Example
+### Run Arctic Example
 
 Due to the model size we recommend using a single 8xH100 instance from your
 favorite cloud provider such as: AWS [p5.48xlarge](https://aws.amazon.com/ec2/instance-types/p5/), 
