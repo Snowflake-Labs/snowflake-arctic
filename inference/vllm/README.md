@@ -2,6 +2,9 @@
 This tutorial covers how to use Arctic with vLLM and what performance you should expect when running it. We are actively 
 working with the vLLM community to upstream Arctic support, but until then please use the repos detailed below.
 
+Hardware assumptions of this tutorial. We are using a single 8xH100 instance (i.e., [p5.48xlarge](https://aws.amazon.com/ec2/instance-types/p5/)) 
+for this tutorial but similar hardware should provide similar results.
+
 ## Dockerfile
 We strongly recommend building and using the following Dockerfile to stand up an environment for running vLLM with Arctic. 
 The system performance and memory utilization of Arctic on vLLM can be sensitive to the runtime environment. We provide a 
