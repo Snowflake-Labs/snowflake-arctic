@@ -48,7 +48,11 @@ We provide two different tutorials on standing up Arctic for inference:
 
 ## Cookbooks/Tutorials
 
-* [Arctic cookbooks](https://www.snowflake.com/en/data-cloud/arctic/cookbook/)
+We believe in a thriving research community, and we are committed to sharing our insights as we build the Arctic family of models, to advance research and reduce the cost of LLM training and inference for everyone. Please check out our [on-going cookbook releases](https://www.snowflake.com/en/data-cloud/arctic/cookbook/) where we will dive deeper into several areas crucial for training models like Arcitc.
+
+* [Exploring Mixture of Experts (MoE)](https://medium.com/snowflake/snowflake-arctic-cookbook-series-exploring-mixture-of-experts-moe-c7d6b8f14d16)
+* [Building an Efficient Training System for Arctic](https://medium.com/snowflake/snowflake-arctic-cookbook-series-building-an-efficient-training-system-for-arctic-6658b9bdfcae)
+* More coming soon..
 
 ## Coming Soon
 
