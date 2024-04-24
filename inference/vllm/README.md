@@ -13,6 +13,14 @@ performance and stability.
 
 * [Dockerfile](Dockerfile)
 
+## Detailed Installation and Benchmarking Instructions
+
+For the steps going forward we highly recommend that use `hf_transfer` when downloading any of the Arctic checkpoints 
+from Hugging Face to get the best throughput. On an AWS instance we are seeing the checkpoint will download in about 20-30 minutes. In vLLM 
+this should be enabled by default if the package is installed (https://github.com/vllm-project/vllm/pull/3817).
+
+If you are using a docker image based on the Dockerfile above you can skip right to step 2.
+
 ## Step 1: Install Dependencies
 
 We recommend setting up a virtual environment to get all of your dependencies isolated to avoid potential conflicts.
@@ -21,6 +29,9 @@ We recommend setting up a virtual environment to get all of your dependencies is
 # we recommend setting up a virtual environment for this
 virtualenv arctic-venv
 source arctic-venv/bin/activate
+
+# faster ckpt download speed
+pip install huggingface_hub[hf_transfer]
 
 # clone vllm repo and checkout arctic branch
 git clone -b arctic https://github.com/Snowflake-Labs/vllm.git
