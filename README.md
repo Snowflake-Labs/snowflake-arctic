@@ -43,3 +43,7 @@ The best way to get yourself running with Arctic is through Hugging Face. We hav
 
 ### Inference
 
+We provide two different tutorials on standing up Arctic for inference:
+
+* [Basic Hugging Face setup](inference/)
+* [vLLM Deployment](inference/vllm/)
