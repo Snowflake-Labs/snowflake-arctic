@@ -14,7 +14,7 @@ At Snowflake, we see a consistent pattern in AI needs and use cases from our ent
 <img src="assets/Training Efficiency Figure.png" width="600px">
 </p>
 
-As seen here, Arctic is on par or better than both LLAMA 3 8B and LLAMA 2 70B on enterprise metrics, while using less than ½ of the training compute budget. Similarly, despite using 17x less compute budget, Arctic is on par with Llama3 70B in enterprise metrics like Coding (HumanEval+ & MBPP+), SQL (Spider) and Instruction Following (IFEval). It does so while remaining competitive on overall performance, for example, despite using 7x less compute than DBRX it remains competitive on Language Understanding and Reasoning (a collection of 11 metrics) while being better in Math (GSM8K).
+As seen here, Arctic is on par or better than both LLAMA 3 8B and LLAMA 2 70B on enterprise metrics, while using less than ½ of the training compute budget. Similarly, despite using 17x less compute budget, Arctic is on par with Llama3 70B in enterprise metrics like Coding (HumanEval+ & MBPP+), SQL (Spider) and Instruction Following (IFEval). It does so while remaining competitive on overall performance, for example, despite using 7x less compute than DBRX, it remains competitive on Language Understanding and Reasoning (a collection of 11 metrics) while being better in Math (GSM8K).
 
 <p align="center">
 <img src="assets/Standard MoE vs Arctic.png" width="600px">
