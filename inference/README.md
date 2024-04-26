@@ -12,7 +12,6 @@ now you will need to use our forks.
 
 ```bash
 deepspeed>=0.14.2
-git+git://github.com/Snowflake-Labs/transformers.git@arctic
 git+git://github.com/Snowflake-Labs/vllm.git@arctic
 huggingface_hub[hf_transfer]
 ```
@@ -38,15 +37,19 @@ os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from transformers.models.arctic.configuration_arctic import ArcticQuantizationConfig
+from deepspeed.linear.config import QuantizationConfig
 
-tokenizer = AutoTokenizer.from_pretrained("Snowflake/snowflake-arctic-instruct")
+tokenizer = AutoTokenizer.from_pretrained(
+    "Snowflake/snowflake-arctic-instruct",
+    trust_remote_code=True
+)
 
-quant_config = ArcticQuantizationConfig(q_bits=8)
+quant_config = QuantizationConfig(q_bits=8)
 
 model = AutoModelForCausalLM.from_pretrained(
     "Snowflake/snowflake-arctic-instruct",
     low_cpu_mem_usage=True,
+    trust_remote_code=True,
     device_map="auto",
     ds_quantization_config=quant_config,
     max_memory={i: "150GiB" for i in range(8)},

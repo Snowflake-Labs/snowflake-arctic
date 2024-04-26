@@ -1,4 +1,2 @@
 deepspeed>=0.14.2
-git+git://github.com/Snowflake-Labs/transformers.git@arctic
-git+git://github.com/Snowflake-Labs/vllm.git@arctic
 huggingface_hub[hf_transfer]
