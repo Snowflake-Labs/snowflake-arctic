@@ -37,7 +37,6 @@ os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from transformers.models.arctic.configuration_arctic import ArcticQuantizationConfig
 from deepspeed.linear.config import QuantizationConfig
 
 tokenizer = AutoTokenizer.from_pretrained(
