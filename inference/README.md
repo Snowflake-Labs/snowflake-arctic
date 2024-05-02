@@ -21,12 +21,13 @@ sitting waiting for the checkpoint shards to download.
 
 ### Run Arctic Example
 
-Due to the model size we recommend using a single 8xH100 instance from your
+Due to the model size we recommend using a single 8xH100-80GB instance from your
 favorite cloud provider such as: AWS [p5.48xlarge](https://aws.amazon.com/ec2/instance-types/p5/), 
-Azure [ND96isr_H100_v5](https://learn.microsoft.com/en-us/azure/virtual-machines/nd-h100-v5-series), etc.
+Azure [ND96isr_H100_v5](https://learn.microsoft.com/en-us/azure/virtual-machines/nd-h100-v5-series), etc. 
+We have only tested this setup with 8xH100-80GB, however 8xA100-80GB should also work.
 
 In this example we are using FP8 quantization provided by DeepSpeed in the backend, we can also use FP6 
-quantization by specifying `q_bits=6` in the `ArcticQuantizationConfig` config. The `"150GiB"` setting 
+quantization by specifying `q_bits=6` in the `QuantizationConfig` config. The `"150GiB"` setting 
 for max_memory is required until we can get DeepSpeed's FP quantization supported natively as a [HFQuantizer](https://huggingface.co/docs/transformers/main/en/hf_quantizer#build-a-new-hfquantizer-class) which we 
 are actively working on.
 
@@ -46,6 +47,7 @@ tokenizer = AutoTokenizer.from_pretrained(
 
 quant_config = QuantizationConfig(q_bits=8)
 
+# The 150GiB number is a workaround until we have HFQuantizer support, must be ~1.9x of the available GPU memory
 model = AutoModelForCausalLM.from_pretrained(
     "Snowflake/snowflake-arctic-instruct",
     low_cpu_mem_usage=True,
