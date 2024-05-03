@@ -6,13 +6,11 @@ If you want to run Arctic with pure-HF to explore the model see the instructions
 
 ### Dependencies
 
-Install the following packages, they can all be found under [requirements.txt](requirements.txt) as well. 
-We are actively working on upstreaming both the `transformers` and `vllm` changes required to run Arctic but for
-now you will need to use our forks.
+Install the following packages, they can all be found under [requirements.txt](requirements.txt) as well.
 
 ```bash
 deepspeed>=0.14.2
-git+git://github.com/Snowflake-Labs/vllm.git@arctic
+transformers>=4.39.0
 huggingface_hub[hf_transfer]
 ```
 
