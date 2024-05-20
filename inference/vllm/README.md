@@ -93,7 +93,7 @@ working on improving this performance so stay tuned!
 
 ## Pre-sharded Quantized Checkpoint
 
-The main Arctic checkpoint is ~900GB of bfloat16 weights, which may be cumbersome if being moved or loaded into vLLM frequenctly. To assuage this issue, we've also created a checkpoint that's already quantized to fp8 using DeepSpeed. This checkpoint is ~460GB and is only compatible with vLLM using tensor-parallelism of size 8.
+The main Arctic checkpoint is ~900GB of bfloat16 weights, which may be cumbersome if being moved or loaded into vLLM frequently. To assuage this issue, we've also created a checkpoint that's already quantized to fp8 using DeepSpeed. This checkpoint is ~460GB and is only compatible with vLLM using tensor-parallelism of size 8.
 
 Checkpoint: https://huggingface.co/Snowflake/snowflake-arctic-instruct-vllm
 
