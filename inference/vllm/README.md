@@ -90,3 +90,21 @@ python benchmark_online.py --prompt_length 2048 \
 
 Currently you should be seeing with `batch_size=1` a throughput of 70+ tokens/sec. We are actively 
 working on improving this performance so stay tuned!
+
+## Pre-sharded Quantized Checkpoint
+
+The main Arctic checkpoint is ~900GB of bfloat16 weights, which may be cumbersome if being moved or loaded into vLLM frequently. To assuage this issue, we've also created a checkpoint that's already quantized to fp8 using DeepSpeed. This checkpoint is ~460GB and is only compatible with vLLM using tensor-parallelism of size 8.
+
+Checkpoint: https://huggingface.co/Snowflake/snowflake-arctic-instruct-vllm
+
+To use this checkpoint, initialize vLLM using `load_format=sharded_state`:
+```python
+llm = LLM(
+    model="Snowflake/snowflake-arctic-instruct-vllm",
+    load_format="sharded_state",
+    quantization="deepspeedfp",
+    tensor_parallel_size=8,
+)
+```
+
+If you need to create a new checkpoint for different quantization or tensor-parallel settings, you can use https://github.com/vllm-project/vllm/blob/main/examples/save_sharded_state.py.
