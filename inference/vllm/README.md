@@ -30,18 +30,16 @@ We recommend setting up a virtual environment to get all of your dependencies is
 virtualenv arctic-venv
 source arctic-venv/bin/activate
 
-# faster ckpt download speed
+# Faster ckpt download speed.
 pip install huggingface_hub[hf_transfer]
 
-# clone vllm repo and checkout arctic branch
-git clone -b arctic https://github.com/Snowflake-Labs/vllm.git
-cd vllm
-pip install -e .
+# Install vLLM main branch.
+pip install git+https://github.com/vllm-project/vllm.git
 
-# clone Hugging Face and checkout arctic branch
+# Clone HuggingFace and checkout the arctic branch. Alternatively, you may skip this step and load Arctic into vLLM using trust_remote_code=True.
 git clone -b arctic https://github.com/Snowflake-Labs/transformers.git
 
-# install deepspeed
+# Install deepspeed.
 pip install deepspeed>=0.14.2
 ```
 
