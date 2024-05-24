@@ -90,11 +90,8 @@ def convert_moe_model(
         sd_hf[f"model.layers.{layer_i}.input_layernorm.weight"] = sd_m[f"model.layers.{layer_i}.input_layernorm.weight"].clone().data
         sd_hf[f"model.layers.{layer_i}.post_attention_layernorm.weight"] = sd_m[f"model.layers.{layer_i}.post_attention_layernorm.weight"].clone().data
         if config.parallel_attn_mlp_res:
-            # doing residual part
+            # doing residual part; the residual base weight is already added in above where the sharded base weights are read; so only need to get the layernorm weight in
             sd_hf[f"model.layers.{layer_i}.residual_layernorm.weight"] = sd_m[f"model.layers.{layer_i}.residual_layernorm.weight"].clone().data
-            sd_hf[f"model.layers.{layer_i}.residual_mlp.w1.weight"] = sd_m[f"model.layers.{layer_i}.residual_mlp.w1.weight"].clone().data
-            sd_hf[f"model.layers.{layer_i}.residual_mlp.w2.weight"] = sd_m[f"model.layers.{layer_i}.residual_mlp.w2.weight"].clone().data
-            sd_hf[f"model.layers.{layer_i}.residual_mlp.w3.weight"] = sd_m[f"model.layers.{layer_i}.residual_mlp.w3.weight"].clone().data
 
         # For moe weights, deepspeed names have to be renamed to HF only names.
         moe_layer = layer_i % config.moe_layer_frequency == (config.moe_layer_frequency - 1)
@@ -117,7 +114,7 @@ def convert_moe_model(
                     lora_weight_param1 = f"{prefix}.lora_weight_1.{suffix}"
                     lora_weight_param2 = f"{prefix}.lora_weight_2.{suffix}"                    
                     new_name = base_weight_param.replace(f"block_sparse_moe.mlp.deepspeed_moe.experts.deepspeed_experts",
-                                                            f"block_sparse_moe.experts")
+                                                            f"block_sparse_moe.experts")      
                     sd_hf[new_name] = merge_lora_weights(sd_expert[base_weight_param],
                                                             sd_expert[lora_weight_param1],
                                                             sd_expert[lora_weight_param2],
