@@ -26,13 +26,15 @@ def convert_moe_model(
     ds_dir: str,
     output_path: str,
     node_rank: int = 8,
+    has_lora: bool = True,
 ) -> None:
     ds_dir = os.path.normpath(ds_dir)
     print(ds_dir)
     parent_directory = os.path.dirname(ds_dir) # assuming the ds_dir points to a global_step directory located inside a checkpoint directory.
     print(parent_directory)
     config = AutoConfig.from_pretrained(parent_directory)
-    lora_scaling_factor = config.ds_lora.lora_alpha / math.sqrt(config.ds_lora.lora_r)
+    if has_lora:
+        lora_scaling_factor = config.ds_lora.lora_alpha / math.sqrt(config.ds_lora.lora_r)
     # No need for lora and quantization params now.
     config.ds_lora = None
     config.ds_quantization = None
@@ -62,26 +64,31 @@ def convert_moe_model(
     sd_hf["model.norm.weight"] = sd_m["model.norm.weight"].clone().data
     sd_hf["lm_head.weight"] = sd_m["lm_head.weight"].clone().data
 
-    # Read all the sharded baseweights
-    sd_of_base_weights = [None] * node_rank
-    for rank in range(node_rank):
-        sd_of_base_weights[rank] = torch.load(os.path.join(ds_dir, f"lora_optimized_linear_sharding_rank_{rank}.pt"), map_location="cpu")
+    if has_lora:
+        # Read all the sharded baseweights
+        sd_of_base_weights = [None] * node_rank
+        for rank in range(node_rank):
+            sd_of_base_weights[rank] = torch.load(os.path.join(ds_dir, f"lora_optimized_linear_sharding_rank_{rank}.pt"), map_location="cpu")
 
-    # Confirm all shards have the sames keys of base weights.
-    combined_base_weight = sd_of_base_weights[0].keys()
-    for i in range(1, node_rank):
-        assert sd_of_base_weights[i].keys() == combined_base_weight
-    
-    # Concatena base weights and merge the lora weights in them as well.
-    for weight in combined_base_weight:
-        base_weight = torch.cat([sd_of_base_weights[rank][weight].to('cuda') for rank in range(node_rank)], dim=1).to('cpu')
-        # now you have a weight like model.layers.5.self_attn.o_proj.weight and you want to create names like
-        # model.layers.5.self_attn.o_proj.lora_weight_2.weight, and model.layers.5.self_attn.o_proj.lora_weight_1.weight
-        prefix, suffix = weight.rsplit(".", 1)
-        lora_weight1 = sd_m[f"{prefix}.lora_weight_1.{suffix}"]
-        lora_weight2 = sd_m[f"{prefix}.lora_weight_2.{suffix}"]
-        sd_hf[weight] = merge_lora_weights(base_weight, lora_weight1, lora_weight2, lora_scaling_factor)
-    
+        # Confirm all shards have the sames keys of base weights.
+        combined_base_weight = sd_of_base_weights[0].keys()
+        for i in range(1, node_rank):
+            assert sd_of_base_weights[i].keys() == combined_base_weight
+        
+        # Concatena base weights and merge the lora weights in them as well.
+        for weight in combined_base_weight:
+            base_weight = torch.cat([sd_of_base_weights[rank][weight].to('cuda') for rank in range(node_rank)], dim=1).to('cpu')
+            # now you have a weight like model.layers.5.self_attn.o_proj.weight and you want to create names like
+            # model.layers.5.self_attn.o_proj.lora_weight_2.weight, and model.layers.5.self_attn.o_proj.lora_weight_1.weight
+            prefix, suffix = weight.rsplit(".", 1)
+            lora_weight1 = sd_m[f"{prefix}.lora_weight_1.{suffix}"]
+            lora_weight2 = sd_m[f"{prefix}.lora_weight_2.{suffix}"]
+            sd_hf[weight] = merge_lora_weights(base_weight, lora_weight1, lora_weight2, lora_scaling_factor)
+    else:
+        for k in sd_m:
+            if "deepspeed" not in k:
+                sd_hf[k] = sd_m[k].clone().data
+
     # Now go over each layer and add weights.
     for layer_i in range(n_layers):
         print(f"Convert Layer {layer_i + 1} / {n_layers}")
@@ -114,11 +121,15 @@ def convert_moe_model(
                     lora_weight_param1 = f"{prefix}.lora_weight_1.{suffix}"
                     lora_weight_param2 = f"{prefix}.lora_weight_2.{suffix}"                    
                     new_name = base_weight_param.replace(f"block_sparse_moe.mlp.deepspeed_moe.experts.deepspeed_experts",
-                                                            f"block_sparse_moe.experts")      
-                    sd_hf[new_name] = merge_lora_weights(sd_expert[base_weight_param],
-                                                            sd_expert[lora_weight_param1],
-                                                            sd_expert[lora_weight_param2],
-                                                            lora_scaling_factor)
+                                                            f"block_sparse_moe.experts")
+                    if has_lora:   
+                        sd_hf[new_name] = merge_lora_weights(sd_expert[base_weight_param],
+                                                             sd_expert[lora_weight_param1],
+                                                             sd_expert[lora_weight_param2],
+                                                             lora_scaling_factor)
+                    else:
+                        sd_hf[new_name] = sd_expert[base_weight_param]
+                                                            
 
 
     with torch.device("meta"):
@@ -163,11 +174,19 @@ def main():
         required=True,
         help="Output path for the huggingface coverted model.",
     )
+    parser.add_argument(
+        "--no-lora-weights",
+        required=False,
+        action="store_true",  
+        help="Output path for the huggingface coverted model.",
+    )
 
     args = parser.parse_args()
     convert_moe_model(
         args.ds_model_path,
         args.output_path,
+        node_rank=8,
+        has_lora=not args.no_lora_weights,
     )
 
 if __name__ == "__main__":
