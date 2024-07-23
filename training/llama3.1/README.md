@@ -4,10 +4,10 @@ If you haven't already, please first read an overview of all the optimizations t
 
 ## Requirements
 
-In order to get started you must install our forks of both [DeepSpeed](https://github.com/Snowflake-Labs/DeepSpeed/tree/ds-llama) and [transformers](https://github.com/Snowflake-Labs/transformers/tree/ds-llama). We are actively working on upstreaming these changes to their respective repos, but in the mean time please use these versions:
+In order to get started you must install our forks of both [DeepSpeed](https://github.com/Snowflake-Labs/DeepSpeed/tree/ds-llama) and [transformers](https://github.com/Snowflake-Labs/transformers/tree/v4.43.0-ds-llama). We are actively working on upstreaming these changes to their respective repos, but in the mean time please use these versions:
 
 ```bash
-pip install git+https://github.com/Snowflake-Labs/transformers.git@ds-llama
+pip install git+https://github.com/Snowflake-Labs/transformers.git@v4.43.0-ds-llama
 pip install git+https://github.com/Snowflake-Labs/DeepSpeed.git@ds-llama
 pip install huggingface_hub[hf_transfer]
 ```
