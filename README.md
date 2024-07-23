@@ -12,7 +12,7 @@
     
 ## Overview
 
-The Snowflake AI Research team is conducting open, foundational research to advance the field of AI while making enterprise AI easy, efficient, and trusted. This repo contains several artifacts to help efficiently train and inference popular LLMs in practice. We released [Arctic](https://www.snowflake.com/blog/arctic-open-efficient-foundation-language-models-snowflake/) in April of 2023 and are proud to announce the release of our Massive LLM inference and fine-tuning stacks specifically tailored to Llama 3.1 405B.
+The [Snowflake AI Research team](https://www.snowflake.com/en/data-cloud/workloads/ai-ml/ai-research/) is conducting open, foundational research to advance the field of AI while making enterprise AI easy, efficient, and trusted. This repo contains several artifacts to help efficiently train and inference popular LLMs in practice. We released [Arctic](https://www.snowflake.com/blog/arctic-open-efficient-foundation-language-models-snowflake/) in April of 2023 and are proud to announce the release of our Massive LLM inference and fine-tuning stacks specifically tailored to Llama 3.1 405B.
 
 ## Llama 3.1 405B
 
