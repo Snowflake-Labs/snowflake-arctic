@@ -34,7 +34,7 @@ def convert_moe_model(
     print(parent_directory)
     config = AutoConfig.from_pretrained(parent_directory)
     if has_lora:
-        lora_scaling_factor = config.ds_lora.lora_alpha / math.sqrt(config.ds_lora.lora_r)
+        lora_scaling_factor = config.ds_lora.lora_alpha / config.ds_lora.lora_r
     # No need for lora and quantization params now.
     config.ds_lora = None
     config.ds_quantization = None
