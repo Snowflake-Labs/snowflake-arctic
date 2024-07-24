@@ -1,0 +1,3 @@
+git+https://github.com/Snowflake-Labs/transformers.git@v4.43.0-ds-llama
+git+https://github.com/Snowflake-Labs/DeepSpeed.git@ds-llama
+triton==2.3.0
