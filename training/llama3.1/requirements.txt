@@ -1,4 +1,4 @@
-git+https://github.com/Snowflake-Labs/transformers.git@v4.43.0-ds-llama
 git+https://github.com/Snowflake-Labs/DeepSpeed.git@ds-llama
+transformers==4.43.3
 triton==2.3.0
 huggingface_hub[hf_transfer]
