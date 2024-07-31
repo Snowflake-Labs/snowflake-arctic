@@ -1,10 +1,10 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 # Based off the lora script here: https://github.com/artidoro/qlora/blob/main/qlora.py
-
 import copy
 import json
 import os
+import deepspeed
 from dataclasses import dataclass, field
 from typing import Optional, Dict, Sequence
 import logging
@@ -24,10 +24,10 @@ from datasets import load_dataset
 import deepspeed.comm as dist
 from deepspeed.linear import LoRAConfig, QuantizationConfig
 
-
 logger = logging.getLogger(__name__)
 
 IGNORE_INDEX = -100
+
 
 @dataclass
 class ModelArguments:
@@ -179,7 +179,8 @@ def get_accelerate_model(args):
             lora_alpha=args.lora_alpha,
             base_weight_sharding=base_weight_shards,
             offload=args.offload,
-            offload_ratio=args.offload_ratio
+            offload_ratio=args.offload_ratio,
+            target_mods=['q_proj', 'k_proj', 'v_proj', 'o_proj', 'gate_proj', 'up_proj', 'down_proj']
         )
     else:
         lora_config = None
@@ -196,30 +197,28 @@ def get_accelerate_model(args):
         args.tokenizer_name_or_path,
         padding_side="right",
         use_fast=False, # Fast tokenizer giving issues.
-        tokenizer_type='llama' if 'llama' in args.model_name_or_path else None, # Needed for HF name change
         token=args.auth_token
     )
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token_id=tokenizer.eos_token_id
         tokenizer.pad_token=tokenizer.eos_token
 
-   
     print(f'loading base model {args.model_name_or_path}...')
-    model = AutoModelForCausalLM.from_pretrained(
-        args.model_name_or_path,
-        cache_dir=args.cache_dir,
-        ds_lora_config=lora_config,
-        ds_quant_config=quantization_config,
-        torch_dtype=(torch.float32 if args.fp16 else (torch.bfloat16 if args.bf16 else torch.float32)),
-        attn_implementation="flash_attention_2",
-        token=args.auth_token
-    )
-    
+    with deepspeed.linear.Init(lora_config=lora_config, quant_config=quantization_config):
+        model = AutoModelForCausalLM.from_pretrained(
+            args.model_name_or_path,
+            cache_dir=args.cache_dir,
+            torch_dtype=(torch.float32 if args.fp16 else (torch.bfloat16 if args.bf16 else torch.float32)),
+            #attn_implementation="flash_attention_2",
+            token=args.auth_token
+        )
+
     print("created model")
     model.config.torch_dtype=(torch.float32 if args.fp16 else (torch.bfloat16 if args.bf16 else torch.float32))
     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
     model.enable_input_require_grads()
     model.config.use_cache = False  # turn off when gradient checkpointing is enabled
+
     return model, tokenizer
 
 
@@ -462,6 +461,7 @@ def train():
     trainer.model.train()
 
     print_trainable_parameters(args, model)
+
     all_metrics = {"run_name": args.run_name}
     # Training
     if args.do_train:

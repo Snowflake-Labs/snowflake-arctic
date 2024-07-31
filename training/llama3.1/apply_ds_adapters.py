@@ -12,6 +12,7 @@ def get_args():
     parser.add_argument('--ckpt-path', type=str, required=True, help='Path to the checkpoint')
     parser.add_argument('--output-dir', type=str, required=True, help='Path to the output directory')
     parser.add_argument('--model-name', type=str, required=True, help='Model type')
+    parser.add_argument('--tokenizer-name', type=str, default=None, help='Tokenizer name, defaults to model name if not provided')
     parser.add_argument('--token', type=str, default=None, help='Auth token for HF hub (if needed)')
     parser.add_argument('--lora-r', type=int, default=64, help='LoRA attention dimension')
     parser.add_argument('--lora-alpha', type=float, default=64.0, help='LoRA scaling factor')
@@ -48,7 +49,9 @@ def main(args):
        torch_dtype=torch.bfloat16
     )
 
-    tokenizer = AutoTokenizer.from_pretrained(args.model_name)
+    if args.tokenizer_name is None:
+        args.tokenizer_name = args.model_name
+    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer_name)
 
     sd = torch.load(args.ckpt_path, map_location="cpu")
 
