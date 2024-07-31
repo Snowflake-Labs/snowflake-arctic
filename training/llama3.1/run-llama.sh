@@ -18,8 +18,10 @@ deepspeed --hostfile $HOSTFILE lora_script.py \
     --model_name_or_path meta-llama/Meta-Llama-3.1-405B \
     --tokenizer_name_or_path meta-llama/Meta-Llama-3.1-405B-Instruct \
     --save_steps 200 --max_steps 1000 --max_train_samples 8000 \
+    --lora_r 64 --lora_alpha 64 \
     --quantize --bits 8 \
     --base_weight_sharding --offload --offload_ratio 0.75 \
     --gradient_checkpointing --activation_checkpointing \
     --learning_rate 2e-5 --lr_scheduler_type linear --warmup_ratio 0.02 \
     --auth-token $HF_AUTH_TOKEN
+
