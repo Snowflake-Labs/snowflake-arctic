@@ -4,11 +4,10 @@ If you haven't already, please first read an overview of all the optimizations t
 
 ## Requirements
 
-In order to get started you must use our fork [DeepSpeed](https://github.com/Snowflake-Labs/DeepSpeed/tree/ds-llama), this branch is currently [pending review](https://github.com/microsoft/DeepSpeed/pull/5791) from the microsoft/DeepSpeed team and we are actively working with them to merge this as soon as possible. In the mean time please use this DeepSpeed fork. The FP8 kernels provided in DeepSpeed require `triton==2.3.x`. This tutorial has been tested with `transformers==4.43.3`, but should work with any >= 4.43 version that supports Llama 3.1.
+This tutorial has been tested with the following package versions, it should work with newer versions as well but if it doesn't please file an issue with any relevant details. The FP8 kernels provided in DeepSpeed require `triton==2.3.x`. This tutorial has been tested with `transformers==4.43.3`, but should work with any >= 4.43 version that supports Llama 3.1. The features required for this tutorial are available in DeepSpeed 0.14.5 and later.
 
 ```bash
-pip install git+https://github.com/Snowflake-Labs/DeepSpeed.git@ds-llama
-pip install triton==2.3.0 transformers==4.43.3 huggingface_hub[hf_transfer]
+pip install deepspeed==0.14.5 triton==2.3.0 transformers==4.43.3 huggingface_hub[hf_transfer]
 ```
 
 ## Getting Started
